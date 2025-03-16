@@ -26,7 +26,7 @@ This challenge represents a practical tech assignment designed to test skills in
 │    └── *.pyc                        # Ignore Python bytecode files
 ├── *.csv                             # The datasets used for the portfolio analysis
 ├── README.md                         # The readme file with project overview, objectives, and instructions
-├── main.ipynb                        # Main script to run the project
+├── Tech-Challenge.ipynb                        # Main script to run the project
 └── requirements.txt                  # List of Python dependencies required for the project (e.g., pandas, matplotlib, etc.)
 
 ```
@@ -43,10 +43,10 @@ pip install -r requirements.txt
 
 ### 2. **Run the Jupyter Notebook:**
 
-Open `main.ipynb` in Visual Code and execute the cells sequentially:
+Open `Tech-Challenge.ipynb` in Visual Code and execute the cells sequentially:
 
 ```bash
-main.ipynb 
+Tech-Challenge.ipynb 
 ```
 
 ## Technologies Used
