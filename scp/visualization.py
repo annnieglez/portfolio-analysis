@@ -259,8 +259,8 @@ def plot_cumulative_returns(data_frame, data_frame_2):
 
     weighted_returns = daily_returns * weights
     portfolio_returns = weighted_returns.sum(axis=1)
-    cumulative_returns = (1 + weighted_returns).cumprod()
-    cumulative_returns_p = (1 + portfolio_returns).cumprod()
+    cumulative_returns = (1 + weighted_returns).cumprod() - 1
+    cumulative_returns_p = (1 + portfolio_returns).cumprod() - 1
 
     plt.figure(figsize=(12, 6))
     for asset, color in zip(cumulative_returns.columns, custom_colors):
@@ -278,7 +278,7 @@ def plot_cumulative_returns(data_frame, data_frame_2):
     
     plt.show()
 
-    return cumulative_returns_p
+    return cumulative_returns_p, portfolio_returns
 
 def calculate_annualized_return(cumulative_returns_p):
     '''
@@ -292,12 +292,12 @@ def calculate_annualized_return(cumulative_returns_p):
         - annualized_portfolio_return (float): The annualized return of the portfolio.
     '''
     
-    total_years = (cumulative_returns_p.index[-1] - cumulative_returns_p.index[0]).days / 365.25
-    annualized_portfolio_return = (cumulative_returns_p.iloc[-1] / cumulative_returns_p.iloc[0]) ** (1 / total_years) - 1
+    total_years = (cumulative_returns_p.index[-1] - cumulative_returns_p.index[0]).days / 261
+    annualized_portfolio_return = (1 + cumulative_returns_p.iloc[-1]) ** (1 / total_years) - 1
     
     return annualized_portfolio_return
 
-def calculate_annualized_volatility(cumulative_returns_p, annualization_factor=261):
+def calculate_annualized_volatility(portfolio_returns, annualization_factor=261):
     '''
     Calculates the annualized volatility of the portfolio.
 
@@ -309,7 +309,6 @@ def calculate_annualized_volatility(cumulative_returns_p, annualization_factor=2
         - float: Annualized volatility of the portfolio.
     '''
 
-    portfolio_returns = cumulative_returns_p.pct_change()
     daily_volatility = portfolio_returns.std()
     annualized_volatility = daily_volatility * np.sqrt(annualization_factor)
     
